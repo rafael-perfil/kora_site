@@ -1,0 +1,1266 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kora Hub — IA que conecta seu ERP, marketplaces e WhatsApp</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #F8FAFC;
+    --bg-base: #FFFFFF;
+    --bg-card: #FFFFFF;
+    --bg-card-2: #F4F7FB;
+    --bg-light: #EDF2F8;
+    --border: #E2E8F2;
+    --border-h: #C7D2E2;
+    --text: #0B1426;
+    --text-2: #4A5775;
+    --text-3: #7A8AA8;
+    --blue-light: #4378BC;
+    --blue: #2E5A9B;
+    --blue-deep: #1E4480;
+    --green: #4ADE80;
+    --orange: #FFB870;
+    --grad-blue: linear-gradient(135deg, #4378BC 0%, #2E5A9B 50%, #1E4480 100%);
+    --grad-soft: linear-gradient(180deg, rgba(90,143,214,0.12), transparent 100%);
+
+    --font: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font);
+    background: var(--bg-base);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* Pre-header announcement */
+  .announce {
+    background: linear-gradient(90deg, rgba(90,143,214,0.15), rgba(46,90,155,0.15));
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .announce strong { color: var(--blue-light); font-weight: 600; }
+  .announce a { color: var(--text); border-bottom: 1px solid var(--blue); padding-bottom: 1px; margin-left: 8px; }
+
+  /* Header */
+  header.site {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .h-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 28px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  .h-nav { display: flex; gap: 28px; }
+  .h-nav.right { justify-content: flex-end; align-items: center; }
+  .h-nav a { font-size: 14px; color: var(--text-2); font-weight: 500; transition: color .15s; }
+  .h-nav a:hover { color: var(--text); }
+  .logo-top { display: flex; justify-content: center; }
+  .logo-top img { height: 38px; }
+  .login-link { font-size: 14px; color: var(--text-2); font-weight: 500; }
+  .nav-cta {
+    background: var(--blue); color: white;
+    padding: 10px 18px; border-radius: 8px;
+    font-size: 14px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .nav-cta:hover { background: var(--blue-light); color: var(--bg-deep); }
+
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+
+  /* HERO */
+  section.hero {
+    padding: 80px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle 600px at 20% 30%, rgba(90,143,214,0.12), transparent 70%),
+      radial-gradient(circle 500px at 80% 70%, rgba(46,90,155,0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .hero-text .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+    color: var(--green);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .hero-text .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+  .hero-text h1 {
+    font-size: clamp(40px, 5vw, 68px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin: 0 0 24px;
+  }
+  .hero-text h1 .high {
+    background: var(--grad-blue);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-text p {
+    font-size: 19px;
+    color: var(--text-2);
+    margin: 0 0 32px;
+    max-width: 540px;
+    line-height: 1.55;
+  }
+  .hero-form {
+    display: flex; gap: 8px;
+    max-width: 480px;
+    margin-bottom: 16px;
+  }
+  .hero-form input {
+    flex: 1;
+    padding: 14px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .hero-form input::placeholder { color: var(--text-3); }
+  .hero-form input:focus { border-color: var(--blue); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    border: 0;
+    transition: all .15s;
+    text-decoration: none;
+  }
+  .btn.primary { background: var(--blue); color: white; }
+  .btn.primary:hover { background: var(--blue-light); color: var(--bg-deep); }
+  .btn.wa { background: #25D366; color: white; }
+  .btn.wa:hover { background: #1eb858; }
+  .btn.outline { background: transparent; border: 1px solid var(--border-h); color: var(--text); }
+  .btn.outline:hover { border-color: var(--blue); }
+  .hero-trust {
+    font-size: 13px;
+    color: var(--text-3);
+    display: flex; align-items: center; gap: 16px;
+    flex-wrap: wrap;
+  }
+  .hero-trust .check { display: inline-flex; align-items: center; gap: 6px; }
+  .hero-trust .check::before {
+    content: "✓"; color: var(--green); font-weight: 700;
+  }
+
+  /* Hero visual — dashboard mock */
+  .dash-mock {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .dash-mock::before {
+    content: "";
+    position: absolute; inset: -1px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(46,90,155,0.25), transparent 40%);
+    z-index: -1;
+    filter: blur(20px); opacity: 0.5;
+  }
+  .dash-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .dash-head .h-l { display: flex; align-items: center; gap: 10px; }
+  .dash-head .h-l .dot-r { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
+  .dash-head .h-l .ttl { font-size: 14px; font-weight: 600; }
+  .dash-head .h-r { display: flex; gap: 6px; }
+  .dash-head .pill { padding: 4px 10px; font-size: 11px; background: var(--bg-light); border-radius: 999px; color: var(--text-2); font-weight: 500; }
+  .dash-head .pill.active { background: var(--blue); color: white; }
+  .dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+  .dash-stat { padding: 14px; background: var(--bg-card-2); border-radius: 10px; border: 1px solid var(--border); }
+  .dash-stat .lbl { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .dash-stat .v { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+  .dash-stat .ch { font-size: 11px; color: var(--green); margin-top: 4px; font-weight: 600; }
+  .dash-stat .ch.neg { color: var(--orange); }
+  .dash-chart {
+    background: var(--bg-card-2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; margin-bottom: 12px;
+  }
+  .dash-chart .ch-h { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-2); margin-bottom: 10px; }
+  .dash-chart .bars { display: flex; align-items: flex-end; gap: 4px; height: 70px; }
+  .dash-chart .bar { flex: 1; border-radius: 3px 3px 0 0; background: var(--grad-blue); opacity: 0.85; }
+  .dash-list { background: var(--bg-card-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+  .dash-item { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; align-items: center; padding: 8px 4px; font-size: 12px; }
+  .dash-item + .dash-item { border-top: 1px solid var(--border); }
+  .dash-item .ico-c { width: 24px; height: 24px; border-radius: 6px; background: var(--grad-blue); opacity: 0.7; }
+  .dash-item .nm { font-weight: 500; }
+  .dash-item .sb { color: var(--text-3); font-size: 11px; }
+  .dash-item .bd { font-size: 11px; padding: 3px 8px; background: rgba(74, 222, 128, 0.15); color: var(--green); border-radius: 6px; font-weight: 600; }
+
+  /* Trust bar */
+  .trust-bar {
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-base);
+  }
+  .trust-bar .lbl {
+    text-align: center; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--text-3); margin-bottom: 20px; font-weight: 600;
+  }
+  .trust-row {
+    display: flex; justify-content: space-around; align-items: center;
+    gap: 32px; flex-wrap: wrap;
+  }
+  .trust-logo {
+    color: var(--text-2); font-weight: 700;
+    font-size: 19px; opacity: 0.75;
+    letter-spacing: -0.01em;
+    transition: opacity .15s, color .15s;
+  }
+  .trust-logo:hover { opacity: 1; color: var(--text); }
+
+  /* Section heading */
+  section.block { padding: 100px 0; position: relative; }
+  .section-tag {
+    display: inline-block;
+    font-size: 13px;
+    background: rgba(90,143,214,0.12);
+    color: var(--blue-light);
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .section-title {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin: 0 0 16px;
+    max-width: 720px;
+  }
+  .section-title .high { color: var(--blue-light); }
+  .section-lead {
+    font-size: 18px; color: var(--text-2);
+    max-width: 620px; margin: 0;
+    line-height: 1.55;
+  }
+  .section-head { text-align: center; margin-bottom: 56px; }
+  .section-head .section-title, .section-head .section-lead { margin-left: auto; margin-right: auto; }
+  .section-head .section-lead { max-width: 580px; }
+
+  /* "O que fazemos" — Tabs + cards */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .pillar-card {
+    padding: 36px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s, border-color .2s;
+  }
+  .pillar-card:hover { border-color: var(--border-h); transform: translateY(-2px); }
+  .pillar-card::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--grad-blue);
+    opacity: 0;
+    transition: opacity .2s;
+  }
+  .pillar-card:hover::before { opacity: 1; }
+  .pillar-card .ico-pill {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, rgba(159,197,240,0.18), rgba(46,90,155,0.18));
+    border: 1px solid rgba(90,143,214,0.3);
+    border-radius: 14px;
+    display: grid; place-items: center;
+    color: var(--blue-light);
+    margin-bottom: 20px;
+  }
+  .pillar-card h3 {
+    font-size: 22px; font-weight: 700; letter-spacing: -0.015em;
+    margin: 0 0 10px;
+  }
+  .pillar-card p { color: var(--text-2); font-size: 15px; margin: 0 0 20px; line-height: 1.55; }
+  .pillar-card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .pillar-card ul li {
+    font-size: 14px; color: var(--text);
+    padding-left: 22px; position: relative;
+    line-height: 1.5;
+  }
+  .pillar-card ul li::before {
+    content: "";
+    position: absolute; left: 0; top: 5px;
+    width: 14px; height: 14px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'><circle cx='7' cy='7' r='6' fill='%235A8FD6' opacity='0.15'/><path d='M4 7L6 9L10 5' stroke='%239FC5F0' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  }
+
+  /* Integrations grid */
+  section.integ {
+    padding: 100px 0;
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .cat-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+  .cat-tab {
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-2);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .cat-tab.active { background: var(--blue); color: white; border-color: var(--blue); }
+  .cat-tab:not(.active):hover { border-color: var(--border-h); color: var(--text); }
+  .integ-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .integ-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    display: flex; align-items: center; gap: 16px;
+    transition: all .2s;
+  }
+  .integ-card:hover { border-color: var(--border-h); transform: translateY(-2px); }
+  .integ-card .ico-i {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    background: var(--grad-blue);
+    opacity: 0.75;
+    flex-shrink: 0;
+    display: grid; place-items: center;
+    color: var(--bg-deep);
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+  }
+  .integ-card .nm { font-size: 16px; font-weight: 700; }
+  .integ-card .cat { font-size: 12px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-top: 2px; }
+
+  /* Numbers — metric cards */
+  section.metrics {
+    padding: 100px 0;
+    background:
+      radial-gradient(circle 600px at 50% 0%, rgba(90,143,214,0.08), transparent 70%),
+      var(--bg-base);
+  }
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .metric-card {
+    padding: 32px 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    text-align: left;
+  }
+  .metric-card .ic-m {
+    width: 36px; height: 36px;
+    background: rgba(90,143,214,0.15);
+    border-radius: 8px;
+    display: grid; place-items: center;
+    color: var(--blue-light);
+    margin-bottom: 20px;
+  }
+  .metric-card .v {
+    font-size: 48px; font-weight: 800;
+    letter-spacing: -0.035em; line-height: 1;
+    margin-bottom: 10px;
+    background: var(--grad-blue);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .metric-card .lbl {
+    font-size: 14px; color: var(--text-2); line-height: 1.5;
+  }
+
+  /* How it works — timeline horizontal */
+  section.how {
+    padding: 100px 0;
+    border-top: 1px solid var(--border);
+  }
+  .how-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    position: relative;
+  }
+  .how-grid::before {
+    content: "";
+    position: absolute;
+    top: 28px; left: 8%; right: 8%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue) 0%, var(--blue-deep) 100%);
+    opacity: 0.4;
+    z-index: 0;
+  }
+  .how-step {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .how-step .stp {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--bg-base);
+    border: 2px solid var(--blue);
+    display: grid; place-items: center;
+    font-weight: 800; font-size: 22px;
+    color: var(--blue-light);
+    margin: -52px auto 18px;
+    letter-spacing: -0.01em;
+  }
+  .how-step h4 { font-size: 17px; font-weight: 700; margin: 0 0 8px; text-align: center; }
+  .how-step p { font-size: 14px; color: var(--text-2); margin: 0; text-align: center; line-height: 1.5; }
+
+  /* Cases — featured + grid */
+  section.cases {
+    padding: 100px 0;
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+  }
+  .cases-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .case-c {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .case-c .case-stat {
+    display: flex; align-items: baseline; gap: 10px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .case-c .case-stat .v {
+    font-size: 36px; font-weight: 800;
+    letter-spacing: -0.03em;
+    background: var(--grad-blue);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .case-c .case-stat .l { font-size: 13px; color: var(--text-2); font-weight: 500; }
+  .case-c .quote {
+    font-size: 16px; color: var(--text); line-height: 1.55;
+    margin: 0; flex: 1;
+  }
+  .case-c .att {
+    display: flex; align-items: center; gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .case-c .av { width: 40px; height: 40px; border-radius: 50%; background: var(--grad-blue); flex-shrink: 0; }
+  .case-c .att .nm { font-size: 14px; font-weight: 600; }
+  .case-c .att .rl { font-size: 12px; color: var(--text-3); }
+
+  /* Pricing */
+  section.pricing {
+    padding: 100px 0;
+    border-top: 1px solid var(--border);
+  }
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+  .plan {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 32px;
+    display: flex; flex-direction: column; gap: 24px;
+    transition: transform .2s;
+  }
+  .plan:hover { transform: translateY(-3px); }
+  .plan.popular {
+    background: linear-gradient(180deg, rgba(46,90,155,0.06), rgba(46,90,155,0.01)), var(--bg-card);
+    border: 2px solid var(--blue);
+    box-shadow: 0 30px 60px rgba(46,90,155,0.18);
+    position: relative;
+  }
+  .plan.popular::before {
+    content: "Mais escolhido";
+    position: absolute;
+    top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--blue);
+    color: white;
+    font-size: 11px;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .plan .pn {
+    font-size: 18px; font-weight: 700; color: var(--blue-light); letter-spacing: -0.01em;
+  }
+  .plan .pd { font-size: 14px; color: var(--text-2); margin: 0; min-height: 44px; line-height: 1.55; }
+  .plan .pp {
+    display: flex; align-items: baseline; gap: 6px;
+    padding-bottom: 20px; border-bottom: 1px solid var(--border);
+  }
+  .plan .pp .v { font-size: 40px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+  .plan .pp .per { font-size: 14px; color: var(--text-3); }
+  .plan ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+  .plan ul li {
+    font-size: 14px; padding-left: 24px; position: relative;
+    color: var(--text); line-height: 1.5;
+  }
+  .plan ul li.dim { color: var(--text-3); }
+  .plan ul li::before {
+    content: "";
+    position: absolute; left: 0; top: 4px;
+    width: 16px; height: 16px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='7' fill='%235A8FD6' fill-opacity='0.2'/><path d='M5 8L7 10L11 6' stroke='%239FC5F0' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  }
+  .plan ul li.dim::before {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><circle cx='8' cy='8' r='7' fill='%231F2E4D'/><path d='M5 8H11' stroke='%236E7B96' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>");
+  }
+  .plan .pcta {
+    margin-top: auto;
+    padding: 14px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: 700; font-size: 14px;
+    background: var(--bg-light);
+    color: var(--text);
+    transition: all .15s;
+  }
+  .plan .pcta:hover { background: var(--blue); }
+  .plan.popular .pcta { background: var(--blue); color: white; }
+  .plan.popular .pcta:hover { background: var(--blue-light); color: var(--bg-deep); }
+
+  /* FAQ-like comparison? skip. About */
+  section.about {
+    padding: 100px 0;
+    border-top: 1px solid var(--border);
+    background: var(--bg-deep);
+  }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr;
+    gap: 64px; align-items: center;
+  }
+  .about-img {
+    aspect-ratio: 1;
+    border-radius: 20px;
+    background:
+      radial-gradient(circle 200px at 30% 30%, rgba(159,197,240,0.18), transparent 60%),
+      radial-gradient(circle 200px at 70% 70%, rgba(46,90,155,0.3), transparent 60%),
+      var(--bg-card);
+    border: 1px solid var(--border);
+    display: grid; place-items: center;
+    position: relative; overflow: hidden;
+  }
+  .about-img img { width: 70%; mix-blend-mode: screen; opacity: 0.95; filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5)); }
+  .about-content p { font-size: 17px; color: var(--text-2); line-height: 1.6; margin: 0 0 18px; }
+  .about-content p.lead { font-size: 22px; color: var(--text); font-weight: 500; letter-spacing: -0.01em; }
+  .about-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .about-pills span {
+    background: var(--bg-card); border: 1px solid var(--border);
+    padding: 8px 14px; border-radius: 999px;
+    font-size: 13px; color: var(--text-2); font-weight: 500;
+  }
+
+  /* Big CTA */
+  section.cta {
+    padding: 100px 0;
+    border-top: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(46,90,155,0.08), transparent 60%),
+      var(--bg-base);
+    text-align: center;
+  }
+  .cta-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 80px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle 300px at 20% 30%, rgba(90,143,214,0.15), transparent 60%),
+      radial-gradient(circle 300px at 80% 70%, rgba(46,90,155,0.2), transparent 60%);
+    pointer-events: none;
+  }
+  .cta-card > * { position: relative; }
+  .cta-card h2 {
+    font-size: clamp(36px, 4.5vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0 0 16px;
+  }
+  .cta-card p { font-size: 18px; color: var(--text-2); max-width: 540px; margin: 0 auto 32px; line-height: 1.55; }
+  .cta-card .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* Footer */
+  footer.site {
+    padding: 64px 0 32px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-deep);
+  }
+  .ft-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ft-brand img { height: 36px; margin-bottom: 16px; }
+  .ft-brand p { color: var(--text-2); font-size: 14px; margin: 0 0 20px; max-width: 280px; line-height: 1.55; }
+  .ft-soc { display: flex; gap: 10px; }
+  .ft-soc a {
+    width: 36px; height: 36px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px;
+    display: grid; place-items: center;
+    color: var(--text-2);
+    transition: all .15s;
+  }
+  .ft-soc a:hover { background: var(--blue); color: white; border-color: var(--blue); }
+  .ft-col h5 { font-size: 13px; color: var(--text); margin: 0 0 16px; font-weight: 700; }
+  .ft-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .ft-col a { color: var(--text-2); font-size: 14px; transition: color .15s; }
+  .ft-col a:hover { color: var(--blue-light); }
+  .ft-bot {
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: var(--text-3);
+    flex-wrap: wrap; gap: 12px;
+  }
+  .ft-bot .legal a { color: var(--text-3); margin-left: 18px; }
+  .ft-bot .legal a:hover { color: var(--text); }
+
+  .wa-float {
+    position: fixed; bottom: 24px; right: 24px;
+    background: #25D366; color: white;
+    padding: 12px 18px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 14px; font-weight: 600;
+    box-shadow: 0 14px 36px rgba(37,211,102,0.4);
+    z-index: 70;
+  }
+
+  @media (max-width: 960px) {
+    .h-nav { display: none; }
+    .h-inner { grid-template-columns: auto 1fr; }
+    .hero-grid, .about-grid, .how-grid, .integ-grid, .metric-grid, .cases-row, .plans, .pillars-grid, .ft-grid { grid-template-columns: 1fr; }
+    .ft-grid { grid-template-columns: 1fr 1fr; }
+    .integ-grid, .metric-grid { grid-template-columns: 1fr 1fr; }
+    .how-grid::before { display: none; }
+    .cta-card { padding: 48px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="announce">
+  <strong>Novo:</strong> integração nativa com Tiny ERP via webhooks em tempo real
+  <a href="#integracoes">Saiba mais →</a>
+</div>
+
+<header class="site">
+  <div class="h-inner">
+    <div class="h-nav left">
+      <a href="#oque">Soluções</a>
+      <a href="#integracoes">Integrações</a>
+      <a href="#planos">Planos</a>
+      <a href="#casos">Casos</a>
+    </div>
+    <a href="#" class="logo-top"><img src="assets/kora-logo-light.svg" alt="Kora Hub" /></a>
+    <div class="h-nav right">
+      <a href="#" class="login-link">Entrar</a>
+      <a href="#contato" class="nav-cta">
+        Falar com vendas
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 6H9M9 6L6 3M9 6L6 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <span class="badge">Plataforma 100% no ar · +180 empresas</span>
+        <h1>IA que <span class="high">conecta seu ERP,</span> marketplaces e WhatsApp em uma só plataforma.</h1>
+        <p>A Kora Hub automatiza atendimento, pedidos e operações — integrando Mercado Livre, Shopee, VTEX, Tiny, Bling e seu canal preferido: o WhatsApp.</p>
+
+        <form class="hero-form" onsubmit="event.preventDefault();">
+          <input type="email" placeholder="seu@email.com.br" />
+          <button class="btn primary" type="submit">Agendar demo</button>
+        </form>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px;">
+          <a href="#" class="btn wa">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4l-2.4-1.1c-.3-.1-.7-.1-.9.2l-.9 1c-2-.9-3.5-2.4-4.4-4.4l1-.9c.3-.2.4-.6.2-.9L8.9 5.9c-.2-.4-.6-.5-1-.4L6 6c-.4.1-.6.4-.6.8.3 5.4 4.6 9.7 10 10 .4 0 .7-.3.8-.6l.5-1.9c.1-.3-.1-.7-.4-.9z"/></svg>
+            Falar no WhatsApp
+          </a>
+          <a href="#oque" class="btn outline">Ver soluções</a>
+        </div>
+
+        <div class="hero-trust">
+          <span class="check">Sem cartão de crédito</span>
+          <span class="check">Setup em 7 dias</span>
+          <span class="check">Suporte em português</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="dash-mock">
+          <div class="dash-head">
+            <div class="h-l">
+              <div class="dot-r"></div>
+              <div class="ttl">Kora Hub · Visão geral</div>
+            </div>
+            <div class="h-r">
+              <span class="pill active">Hoje</span>
+              <span class="pill">Semana</span>
+              <span class="pill">Mês</span>
+            </div>
+          </div>
+          <div class="dash-stats">
+            <div class="dash-stat">
+              <div class="lbl">Conversas</div>
+              <div class="v">3.247</div>
+              <div class="ch">↑ 12,4% vs ontem</div>
+            </div>
+            <div class="dash-stat">
+              <div class="lbl">Resolvidas IA</div>
+              <div class="v">82%</div>
+              <div class="ch">↑ 4,1%</div>
+            </div>
+            <div class="dash-stat">
+              <div class="lbl">Vendas chat</div>
+              <div class="v">R$ 184k</div>
+              <div class="ch">↑ 28,7%</div>
+            </div>
+          </div>
+          <div class="dash-chart">
+            <div class="ch-h">
+              <span>Conversas por hora</span>
+              <span>Última atualização: agora</span>
+            </div>
+            <div class="bars">
+              <div class="bar" style="height: 30%"></div>
+              <div class="bar" style="height: 45%"></div>
+              <div class="bar" style="height: 35%"></div>
+              <div class="bar" style="height: 55%"></div>
+              <div class="bar" style="height: 70%"></div>
+              <div class="bar" style="height: 85%"></div>
+              <div class="bar" style="height: 95%"></div>
+              <div class="bar" style="height: 75%"></div>
+              <div class="bar" style="height: 80%"></div>
+              <div class="bar" style="height: 60%"></div>
+              <div class="bar" style="height: 50%"></div>
+              <div class="bar" style="height: 40%"></div>
+            </div>
+          </div>
+          <div class="dash-list">
+            <div class="dash-item">
+              <div class="ico-c"></div>
+              <div><div class="nm">Pedido #4821 · Mercado Livre</div><div class="sb">Tênis Pro Run 42</div></div>
+              <span class="bd">R$ 289</span>
+            </div>
+            <div class="dash-item">
+              <div class="ico-c" style="opacity:.85"></div>
+              <div><div class="nm">Pedido #4820 · Shopee</div><div class="sb">Kit Verão</div></div>
+              <span class="bd">R$ 129</span>
+            </div>
+            <div class="dash-item">
+              <div class="ico-c" style="opacity:.6"></div>
+              <div><div class="nm">Conversa #221 · WhatsApp</div><div class="sb">Resolvida por IA · 1m32s</div></div>
+              <span class="bd" style="background: rgba(159,197,240,0.15); color: var(--blue-light);">IA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust bar -->
+<div class="trust-bar">
+  <div class="wrap">
+    <div class="lbl">Empresas que já operam com a Kora Hub</div>
+    <div class="trust-row">
+      <span class="trust-logo">Móveis Norte</span>
+      <span class="trust-logo">Linha Pro</span>
+      <span class="trust-logo">Casa Brasilis</span>
+      <span class="trust-logo">Bemvindo Co</span>
+      <span class="trust-logo">Atelier Sul</span>
+      <span class="trust-logo">Vita Suplementos</span>
+      <span class="trust-logo">Trail&Co</span>
+    </div>
+  </div>
+</div>
+
+<!-- O QUE FAZEMOS -->
+<section class="block" id="oque">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">O que fazemos</span>
+      <h2 class="section-title">Tudo o que sua operação precisa, <span class="high">conectado por IA.</span></h2>
+      <p class="section-lead">Quatro frentes integradas, controladas em um só painel — para que seu time foque em vender, não em apagar incêndio.</p>
+    </div>
+
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="ico-pill">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M3 7C3 5.34 4.34 4 6 4H18C19.66 4 21 5.34 21 7V15C21 16.66 19.66 18 18 18H9L4 22V7Z" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="8" cy="11" r="1" fill="currentColor"/>
+            <circle cx="12" cy="11" r="1" fill="currentColor"/>
+            <circle cx="16" cy="11" r="1" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3>Chat com IA</h3>
+        <p>Agentes treinados com seu catálogo, tom de voz e regras de negócio. Resolvem dúvidas, recomendam produtos, fecham pedidos.</p>
+        <ul>
+          <li>Resolução autônoma de até 80% dos atendimentos</li>
+          <li>Transferência ao humano com contexto completo</li>
+          <li>Métricas em tempo real (NPS, CSAT, conversão)</li>
+        </ul>
+      </div>
+
+      <div class="pillar-card">
+        <div class="ico-pill">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M12 21C16.97 21 21 16.97 21 12C21 7.03 16.97 3 12 3C7.03 3 3 7.03 3 12C3 13.59 3.4 15.08 4.13 16.37L3 21L7.63 19.87C8.92 20.6 10.41 21 12 21Z" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M9 11C9 12.66 10.34 14 12 14C12.46 14 12.9 13.89 13.29 13.69" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>WhatsApp Business API</h3>
+        <p>Canal oficial Meta integrado ao seu CRM e ERP. Disparos segmentados, notificações automáticas e recuperação de carrinho.</p>
+        <ul>
+          <li>API oficial WhatsApp Business</li>
+          <li>Templates aprovados pela Meta inclusos</li>
+          <li>Disparos em massa segmentados por comportamento</li>
+        </ul>
+      </div>
+
+      <div class="pillar-card">
+        <div class="ico-pill">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M3 7L12 3L21 7V17L12 21L3 17V7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M3 7L12 12M12 12L21 7M12 12V21" stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+        </div>
+        <h3>Marketplaces unificados</h3>
+        <p>Mercado Livre, Shopee, VTEX e Tray em um painel. Estoque, preços, pedidos e mensagens — sempre sincronizados.</p>
+        <ul>
+          <li>Sincronização de catálogo e estoque em tempo real</li>
+          <li>Inbox unificado para mensagens de compradores</li>
+          <li>Regras de precificação por canal</li>
+        </ul>
+      </div>
+
+      <div class="pillar-card">
+        <div class="ico-pill">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M3 10H21M7 14H10M7 17H12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>ERP com IA por cima</h3>
+        <p>Tiny e Bling com camada inteligente: relatórios em linguagem natural, previsão de demanda, automações por gatilho.</p>
+        <ul>
+          <li>Perguntas em português, respostas instantâneas</li>
+          <li>Previsão de demanda baseada em histórico</li>
+          <li>Automações: estoque baixo, pedido pago, etc.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section class="integ" id="integracoes">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">Integrações nativas</span>
+      <h2 class="section-title">Conecte tudo o que <span class="high">você já usa.</span></h2>
+      <p class="section-lead">Sem trocar de sistema. Sem migração. Plugamos e a operação continua girando.</p>
+    </div>
+
+    <div class="cat-tabs">
+      <button class="cat-tab active">Todas</button>
+      <button class="cat-tab">Canais</button>
+      <button class="cat-tab">Marketplaces</button>
+      <button class="cat-tab">ERPs</button>
+      <button class="cat-tab">Plataformas</button>
+    </div>
+
+    <div class="integ-grid">
+      <div class="integ-card"><div class="ico-i">W</div><div><div class="nm">WhatsApp</div><div class="cat">Canal · API oficial</div></div></div>
+      <div class="integ-card"><div class="ico-i">M</div><div><div class="nm">Mercado Livre</div><div class="cat">Marketplace</div></div></div>
+      <div class="integ-card"><div class="ico-i">V</div><div><div class="nm">VTEX</div><div class="cat">Plataforma</div></div></div>
+      <div class="integ-card"><div class="ico-i">T</div><div><div class="nm">Tray</div><div class="cat">Plataforma</div></div></div>
+      <div class="integ-card"><div class="ico-i">S</div><div><div class="nm">Shopee</div><div class="cat">Marketplace</div></div></div>
+      <div class="integ-card"><div class="ico-i">T</div><div><div class="nm">Tiny</div><div class="cat">ERP</div></div></div>
+      <div class="integ-card"><div class="ico-i">B</div><div><div class="nm">Bling</div><div class="cat">ERP</div></div></div>
+      <div class="integ-card" style="background: var(--bg-card-2); border-style: dashed; opacity: 0.95;">
+        <div class="ico-i" style="background: var(--bg-light); color: var(--text-2);">+</div>
+        <div><div class="nm">Mais 12 integrações</div><div class="cat">Sob demanda</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="metrics">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">Resultados reais</span>
+      <h2 class="section-title">Números que aparecem no <span class="high">seu relatório.</span></h2>
+      <p class="section-lead">Médias verificadas em mais de 180 clientes ativos da Kora Hub.</p>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="ic-m">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 17L8 12L12 16L17 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 11H17V15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="v">+312%</div>
+        <div class="lbl">no volume de atendimentos resolvidos sem operador humano</div>
+      </div>
+      <div class="metric-card">
+        <div class="ic-m">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.6"/><path d="M10 6V10L12.5 11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div class="v">−68%</div>
+        <div class="lbl">no tempo médio de primeira resposta no WhatsApp</div>
+      </div>
+      <div class="metric-card">
+        <div class="ic-m">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 7L4 14L10 17L16 14L16 7L10 4L4 7Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 7L10 10L16 7M10 10V17" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <div class="v">+24%</div>
+        <div class="lbl">em conversão de carrinho recuperado via chat com IA</div>
+      </div>
+      <div class="metric-card">
+        <div class="ic-m">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5L10 10L15 5M5 15L10 10L15 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="v">2.1×</div>
+        <div class="lbl">mais pedidos processados sem aumentar o time</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">Como funciona</span>
+      <h2 class="section-title">Da conexão à automação, <span class="high">em poucas semanas.</span></h2>
+    </div>
+
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="stp">1</div>
+        <h4>Diagnóstico</h4>
+        <p>Mapeamos sua operação atual, canais ativos e gargalos em 1 reunião.</p>
+      </div>
+      <div class="how-step">
+        <div class="stp">2</div>
+        <h4>Integração</h4>
+        <p>Conectamos seu ERP, canais e marketplaces via API. Sem migração.</p>
+      </div>
+      <div class="how-step">
+        <div class="stp">3</div>
+        <h4>Treinamento</h4>
+        <p>Configuramos a IA com seu catálogo, tom e regras de negócio.</p>
+      </div>
+      <div class="how-step">
+        <div class="stp">4</div>
+        <h4>Operação</h4>
+        <p>Você acompanha tudo em um painel único e o time atua só onde precisa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="cases" id="casos">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">Casos de sucesso</span>
+      <h2 class="section-title">Empresas brasileiras que <span class="high">já operam diferente.</span></h2>
+    </div>
+
+    <div class="cases-row">
+      <div class="case-c">
+        <div class="case-stat">
+          <div class="v">3×</div>
+          <div class="l">capacidade de atendimento</div>
+        </div>
+        <p class="quote">"Conseguimos centralizar Mercado Livre, Shopee e Bling em um painel só. O time triplicou a capacidade sem contratar ninguém."</p>
+        <div class="att">
+          <div class="av"></div>
+          <div><div class="nm">Marina Lopes</div><div class="rl">Head de Operações · Móveis Norte</div></div>
+        </div>
+      </div>
+      <div class="case-c">
+        <div class="case-stat">
+          <div class="v">+47%</div>
+          <div class="l">de conversão no WhatsApp</div>
+        </div>
+        <p class="quote">"A IA responde mais rápido e melhor do que a gente respondia. E ainda puxa o pedido do ERP. É um operador sênior 24/7."</p>
+        <div class="att">
+          <div class="av"></div>
+          <div><div class="nm">Rafael Mendes</div><div class="rl">CEO · Linha Pro Suplementos</div></div>
+        </div>
+      </div>
+      <div class="case-c">
+        <div class="case-stat">
+          <div class="v">7 dias</div>
+          <div class="l">do contrato à operação</div>
+        </div>
+        <p class="quote">"Plugaram VTEX, WhatsApp e Tiny em uma semana. Onboarding limpo, equipe atenciosa. Foi só ligar a chave."</p>
+        <div class="att">
+          <div class="av"></div>
+          <div><div class="nm">Patrícia Sá</div><div class="rl">Diretora · Casa Brasilis</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="planos">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-tag">Planos transparentes</span>
+      <h2 class="section-title">Comece simples, <span class="high">cresça sem trocar de plataforma.</span></h2>
+      <p class="section-lead">Preços de referência. Para volumes acima de 50.000 mensagens/mês, fale com o time comercial.</p>
+    </div>
+
+    <div class="plans">
+      <div class="plan">
+        <div class="pn">Starter</div>
+        <p class="pd">Para times pequenos começando pelo WhatsApp.</p>
+        <div class="pp"><span class="v">R$ 497</span><span class="per">/ mês</span></div>
+        <ul>
+          <li>WhatsApp Business API</li>
+          <li>1 agente de IA configurado</li>
+          <li>Até 3.000 conversas/mês</li>
+          <li>Integração com 1 ERP</li>
+          <li>Suporte por e-mail</li>
+          <li class="dim">Marketplaces</li>
+          <li class="dim">SLA dedicado</li>
+        </ul>
+        <a href="#contato" class="pcta">Começar agora</a>
+      </div>
+
+      <div class="plan popular">
+        <div class="pn">Growth</div>
+        <p class="pd">Para empresas vendendo em múltiplos canais.</p>
+        <div class="pp"><span class="v">R$ 1.497</span><span class="per">/ mês</span></div>
+        <ul>
+          <li>Tudo do Starter, e mais:</li>
+          <li>Integração com 3 marketplaces</li>
+          <li>ERP + sincronização de catálogo</li>
+          <li>Até 15.000 conversas/mês</li>
+          <li>2 agentes de IA</li>
+          <li>Suporte prioritário em horário comercial</li>
+          <li>Dashboards customizados</li>
+        </ul>
+        <a href="#contato" class="pcta">Agendar demonstração</a>
+      </div>
+
+      <div class="plan">
+        <div class="pn">Enterprise</div>
+        <p class="pd">Volumes grandes, fluxos sob medida, SLA dedicado.</p>
+        <div class="pp"><span class="v">Custom</span></div>
+        <ul>
+          <li>Conversas ilimitadas</li>
+          <li>Integrações sob medida</li>
+          <li>IA com modelo dedicado</li>
+          <li>SLA + gerente de conta</li>
+          <li>Onboarding white-glove</li>
+          <li>Segurança avançada (SSO, audit log)</li>
+          <li>Treinamento da equipe inclusivo</li>
+        </ul>
+        <a href="#contato" class="pcta">Falar com vendas</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="sobre">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-img">
+        <img src="assets/kora-logo-light.svg" alt="Kora Hub" />
+      </div>
+      <div class="about-content">
+        <span class="section-tag">Sobre a Kora Hub</span>
+        <h2 class="section-title" style="margin-top: 8px;">Conectando o varejo brasileiro <span class="high">desde 2022.</span></h2>
+        <p class="lead">Empresas brasileiras gastam mais tempo conectando sistemas do que vendendo neles. Nascemos para mudar isso.</p>
+        <p>Construímos uma plataforma que une integração de canais, inteligência artificial e operação em uma só camada — para que sua empresa se concentre no que importa: crescer.</p>
+        <p>Somos um time de engenheiros, especialistas em e-commerce e operadores de IA. Atendemos da loja pequena ao varejista que processa milhares de pedidos por dia.</p>
+        <div class="about-pills">
+          <span>180+ clientes ativos</span>
+          <span>12M+ conversas processadas</span>
+          <span>Time 100% brasileiro</span>
+          <span>LGPD compliant</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG CTA -->
+<section class="cta" id="contato">
+  <div class="wrap">
+    <div class="cta-card">
+      <h2>Vamos conectar sua operação?</h2>
+      <p>Conte sua operação atual e mostramos como a Kora Hub se encaixa. Resposta em até 1 dia útil.</p>
+      <div class="ctas">
+        <a href="#" class="btn wa" style="padding: 16px 28px; font-size: 15px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4l-2.4-1.1c-.3-.1-.7-.1-.9.2l-.9 1c-2-.9-3.5-2.4-4.4-4.4l1-.9c.3-.2.4-.6.2-.9L8.9 5.9c-.2-.4-.6-.5-1-.4L6 6c-.4.1-.6.4-.6.8.3 5.4 4.6 9.7 10 10 .4 0 .7-.3.8-.6l.5-1.9c.1-.3-.1-.7-.4-.9z"/></svg>
+          Falar no WhatsApp agora
+        </a>
+        <a href="#" class="btn outline" style="padding: 16px 28px; font-size: 15px;">Agendar conversa</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site">
+  <div class="wrap">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <img src="assets/kora-logo-light.svg" alt="Kora Hub" />
+        <p>Inteligência Artificial para seu ERP, marketplaces e canais de atendimento.</p>
+        <div class="ft-soc">
+          <a href="#" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h5>Soluções</h5>
+        <ul>
+          <li><a href="#">Chat IA</a></li>
+          <li><a href="#">WhatsApp Business</a></li>
+          <li><a href="#">Marketplaces</a></li>
+          <li><a href="#">ERP integrado</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h5>Empresa</h5>
+        <ul>
+          <li><a href="#">Sobre nós</a></li>
+          <li><a href="#">Casos de sucesso</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Carreiras</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h5>Recursos</h5>
+        <ul>
+          <li><a href="#">Documentação</a></li>
+          <li><a href="#">Integrações</a></li>
+          <li><a href="#">Central de ajuda</a></li>
+          <li><a href="#">Status</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h5>Contato</h5>
+        <ul>
+          <li><a href="#">WhatsApp</a></li>
+          <li><a href="#">contato@kora.com.br</a></li>
+          <li><a href="#">+55 (11) 0000-0000</a></li>
+          <li><a href="#">São Paulo, BR</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 Kora Hub Tecnologia Ltda. CNPJ 00.000.000/0001-00</span>
+      <span class="legal">
+        <a href="#">Termos de uso</a>
+        <a href="#">Privacidade</a>
+        <a href="#">LGPD</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<a href="#contato" class="wa-float">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.93L2 22l5.25-1.38c1.43.78 3.05 1.22 4.79 1.22 5.52 0 10-4.48 10-10s-4.48-9.84-10-9.84zm5.84 14.13c-.25.7-1.44 1.34-2 1.4-.51.05-1.16.07-1.87-.12-.43-.13-.99-.31-1.7-.62-3-1.29-4.95-4.31-5.1-4.51-.15-.2-1.22-1.63-1.22-3.11s.78-2.2 1.05-2.5c.28-.31.6-.38.8-.38h.58c.18 0 .43-.07.68.52.25.6.85 2.08.93 2.23.07.15.13.32.02.52-.1.2-.15.32-.3.5-.15.18-.32.4-.45.53-.15.15-.31.31-.13.61.18.3.79 1.31 1.7 2.12 1.18 1.05 2.17 1.38 2.47 1.53.3.15.48.13.65-.08.18-.2.75-.88.95-1.18.2-.3.4-.25.68-.15.28.1 1.75.82 2.05.97.3.15.5.22.58.35.07.13.07.75-.18 1.46z"/></svg>
+  Falar no WhatsApp
+</a>
+
+<script src="js/kora.js"></script>
+</body>
+</html>
