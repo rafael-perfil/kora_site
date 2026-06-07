@@ -80,13 +80,19 @@
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       z-index: 100;
-      display: none;
+      display: flex;
       flex-direction: column;
       padding: 80px 28px 32px;
+      visibility: hidden;
       opacity: 0;
-      transition: opacity .25s ease;
+      transform: translateX(100%);
+      transition: opacity .3s ease, transform .35s cubic-bezier(.2,.7,.2,1), visibility .3s;
     }
-    .kora-mobile-drawer.open { display: flex; opacity: 1; }
+    .kora-mobile-drawer.open {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(0);
+    }
     .kora-mobile-drawer a {
       color: #E8EDF7;
       text-decoration: none;
@@ -94,7 +100,19 @@
       padding: 16px 0;
       border-bottom: 1px solid rgba(159,197,240,.08);
       font-weight: 500;
+      opacity: 0;
+      transform: translateX(16px);
+      transition: opacity .3s ease, transform .3s ease;
     }
+    .kora-mobile-drawer.open a {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .kora-mobile-drawer.open a:nth-child(2) { transition-delay: .07s; }
+    .kora-mobile-drawer.open a:nth-child(3) { transition-delay: .13s; }
+    .kora-mobile-drawer.open a:nth-child(4) { transition-delay: .19s; }
+    .kora-mobile-drawer.open a:nth-child(5) { transition-delay: .25s; }
+    .kora-mobile-drawer.open a:nth-child(6) { transition-delay: .31s; }
     .kora-mobile-close {
       position: absolute; top: 18px; right: 22px;
       width: 40px; height: 40px;
@@ -261,7 +279,7 @@
       if (hasReais) prefix = 'R$ ';
       if (hasPlus && !hasMinus) prefix = '+' + prefix;
       if (hasMinus) prefix = '−' + prefix.replace('−', '');
-      if (hasPercent) suffix = '%';
+      if (isPercent) suffix = '%';
       if (hasKsuffix) suffix = 'k';
       if (hasMillion) suffix = 'M+';
       if (hasX) suffix = '×';

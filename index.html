@@ -4,7 +4,77 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Kora Hub — IA que conecta seu ERP, marketplaces e WhatsApp</title>
+<meta name="description" content="A Kora Hub unifica ERP, Mercado Livre, Shopee, VTEX e WhatsApp em uma plataforma de IA. Automatize atendimento, pedidos e operações. +180 empresas. Setup em 7 dias." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://korahub.com.br/" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Kora Hub — IA que conecta seu ERP, marketplaces e WhatsApp" />
+<meta property="og:description" content="Unifique ERP, marketplaces e WhatsApp com IA. +180 empresas brasileiras. Setup em 7 dias, sem trocar de sistema." />
+<meta property="og:url" content="https://korahub.com.br/" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:site_name" content="Kora Hub" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Kora Hub — IA que conecta seu ERP, marketplaces e WhatsApp" />
+<meta name="twitter:description" content="Automatize atendimento, pedidos e operações. ERP + Mercado Livre + Shopee + WhatsApp em um só painel." />
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Kora Hub",
+  "description": "Plataforma de IA que unifica ERP, marketplaces e WhatsApp para o varejo brasileiro.",
+  "url": "https://korahub.com.br",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "inLanguage": "pt-BR",
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Starter",
+      "price": "497",
+      "priceCurrency": "BRL",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "497",
+        "priceCurrency": "BRL",
+        "unitText": "MONTH"
+      }
+    },
+    {
+      "@type": "Offer",
+      "name": "Growth",
+      "price": "1497",
+      "priceCurrency": "BRL",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "1497",
+        "priceCurrency": "BRL",
+        "unitText": "MONTH"
+      }
+    }
+  ]
+}
+</script>
+
+<!-- Google Analytics 4 — substitua G-XXXXXXXXXX pelo seu Measurement ID -->
+<!-- ATENÇÃO (LGPD): ative apenas após consentimento do usuário -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
+
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -707,6 +777,64 @@
     .how-grid::before { display: none; }
     .cta-card { padding: 48px 28px; }
   }
+
+  /* FAQ section */
+  section.faq {
+    padding: 100px 0;
+    border-top: 1px solid var(--border);
+    background: var(--bg-deep);
+  }
+  .faq-list {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  details.faq-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  details.faq-item[open] { border-color: var(--border-h); }
+  details.faq-item summary {
+    padding: 22px 24px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    user-select: none;
+    transition: color .15s;
+  }
+  details.faq-item summary::-webkit-details-marker { display: none; }
+  details.faq-item[open] summary { color: var(--blue-light); }
+  details.faq-item summary::after {
+    content: "";
+    width: 20px; height: 20px;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'><path d='M5 7.5L10 12.5L15 7.5' stroke='%234A5775' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    transition: transform .25s ease;
+  }
+  details.faq-item[open] summary::after { transform: rotate(180deg); }
+  .faq-body {
+    padding: 0 24px 22px;
+    font-size: 15px;
+    color: var(--text-2);
+    line-height: 1.6;
+    border-top: 1px solid var(--border);
+    margin: 0 24px;
+    padding-top: 18px;
+  }
+  @media (max-width: 960px) {
+    details.faq-item summary { font-size: 15px; padding: 18px 20px; }
+    .faq-body { margin: 0 20px; }
+  }
 </style>
 </head>
 <body>
@@ -723,8 +851,9 @@
       <a href="#integracoes">Integrações</a>
       <a href="#planos">Planos</a>
       <a href="#casos">Casos</a>
+      <a href="#faq">FAQ</a>
     </div>
-    <a href="#" class="logo-top"><img src="assets/kora-logo-light.svg" alt="Kora Hub" /></a>
+    <a href="#" class="logo-top" aria-label="Kora Hub — página inicial"><img src="assets/kora-logo-light.svg" alt="Kora Hub" /></a>
     <div class="h-nav right">
       <a href="#" class="login-link">Entrar</a>
       <a href="#contato" class="nav-cta">
@@ -751,7 +880,7 @@
         </form>
 
         <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px;">
-          <a href="#" class="btn wa">
+          <a href="#contato" class="btn wa">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4l-2.4-1.1c-.3-.1-.7-.1-.9.2l-.9 1c-2-.9-3.5-2.4-4.4-4.4l1-.9c.3-.2.4-.6.2-.9L8.9 5.9c-.2-.4-.6-.5-1-.4L6 6c-.4.1-.6.4-.6.8.3 5.4 4.6 9.7 10 10 .4 0 .7-.3.8-.6l.5-1.9c.1-.3-.1-.7-.4-.9z"/></svg>
             Falar no WhatsApp
           </a>
@@ -1148,6 +1277,48 @@
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Dúvidas frequentes</span>
+      <h2 class="section-title">Respostas para as perguntas <span class="high">mais comuns.</span></h2>
+    </div>
+
+    <div class="faq-list">
+      <details class="faq-item reveal reveal-delay-1">
+        <summary>Preciso trocar meu ERP para usar a Kora Hub?</summary>
+        <p class="faq-body">Não. A Kora Hub se conecta ao seu Tiny, Bling ou outro ERP via API, sem exigir migração de dados. Você continua usando o sistema que já conhece, com a inteligência da Kora por cima — sem interromper a operação.</p>
+      </details>
+
+      <details class="faq-item reveal reveal-delay-2">
+        <summary>Quanto tempo leva para implementar?</summary>
+        <p class="faq-body">O setup padrão é concluído em até 7 dias corridos. Isso inclui a conexão com o ERP, marketplaces e WhatsApp, além da configuração inicial dos agentes de IA com o seu catálogo e regras de negócio.</p>
+      </details>
+
+      <details class="faq-item reveal reveal-delay-3">
+        <summary>A IA aprende com o catálogo da minha empresa?</summary>
+        <p class="faq-body">Sim. Treinamos o agente com seus produtos, preços, políticas de troca e tom de comunicação. O resultado é uma IA que responde como um vendedor sênior da sua equipe — disponível 24 horas por dia, 7 dias por semana.</p>
+      </details>
+
+      <details class="faq-item reveal reveal-delay-4">
+        <summary>Como funciona o suporte técnico?</summary>
+        <p class="faq-body">Todos os planos incluem suporte em português. No Starter, o atendimento é por e-mail. No Growth, o suporte é prioritário em horário comercial. No Enterprise, você tem um gerente de conta dedicado com SLA contratual garantido.</p>
+      </details>
+
+      <details class="faq-item reveal reveal-delay-1">
+        <summary>Meus dados estão seguros? A Kora Hub é LGPD compliant?</summary>
+        <p class="faq-body">Sim. Somos totalmente conformes com a LGPD. Todos os dados são armazenados em servidores brasileiros, com criptografia em trânsito e em repouso. Você pode solicitar exclusão, portabilidade ou relatório de dados a qualquer momento.</p>
+      </details>
+
+      <details class="faq-item reveal reveal-delay-2">
+        <summary>Posso cancelar a qualquer momento?</summary>
+        <p class="faq-body">Sim, sem fidelidade mínima. Os planos Starter e Growth são mensais e podem ser cancelados com 30 dias de antecedência. Para o Enterprise, as condições de vigência são definidas no contrato comercial.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section class="about" id="sobre">
   <div class="wrap">
@@ -1179,11 +1350,11 @@
       <h2>Vamos conectar sua operação?</h2>
       <p>Conte sua operação atual e mostramos como a Kora Hub se encaixa. Resposta em até 1 dia útil.</p>
       <div class="ctas">
-        <a href="#" class="btn wa" style="padding: 16px 28px; font-size: 15px;">
+        <a href="#contato" class="btn wa" style="padding: 16px 28px; font-size: 15px;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4l-2.4-1.1c-.3-.1-.7-.1-.9.2l-.9 1c-2-.9-3.5-2.4-4.4-4.4l1-.9c.3-.2.4-.6.2-.9L8.9 5.9c-.2-.4-.6-.5-1-.4L6 6c-.4.1-.6.4-.6.8.3 5.4 4.6 9.7 10 10 .4 0 .7-.3.8-.6l.5-1.9c.1-.3-.1-.7-.4-.9z"/></svg>
           Falar no WhatsApp agora
         </a>
-        <a href="#" class="btn outline" style="padding: 16px 28px; font-size: 15px;">Agendar conversa</a>
+        <a href="mailto:contato@kora.com.br" class="btn outline" style="padding: 16px 28px; font-size: 15px;">Agendar conversa</a>
       </div>
     </div>
   </div>
@@ -1220,33 +1391,33 @@
       <div class="ft-col">
         <h5>Empresa</h5>
         <ul>
-          <li><a href="#">Sobre nós</a></li>
-          <li><a href="#">Casos de sucesso</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Carreiras</a></li>
+          <li><a href="#sobre">Sobre nós</a></li>
+          <li><a href="#casos">Casos de sucesso</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contato">Carreiras</a></li>
         </ul>
       </div>
       <div class="ft-col">
         <h5>Recursos</h5>
         <ul>
-          <li><a href="#">Documentação</a></li>
-          <li><a href="#">Integrações</a></li>
-          <li><a href="#">Central de ajuda</a></li>
-          <li><a href="#">Status</a></li>
+          <li><a href="#integracoes">Integrações</a></li>
+          <li><a href="#planos">Planos e preços</a></li>
+          <li><a href="#faq">Central de ajuda</a></li>
+          <li><a href="#contato">Status</a></li>
         </ul>
       </div>
       <div class="ft-col">
         <h5>Contato</h5>
         <ul>
-          <li><a href="#">WhatsApp</a></li>
-          <li><a href="#">contato@kora.com.br</a></li>
-          <li><a href="#">+55 (11) 0000-0000</a></li>
-          <li><a href="#">São Paulo, BR</a></li>
+          <li><a href="#contato">WhatsApp</a></li>
+          <li><a href="mailto:contato@kora.com.br">contato@kora.com.br</a></li>
+          <li><a href="tel:+551100000000">+55 (11) 0000-0000</a></li>
+          <li><a href="#contato">São Paulo, BR</a></li>
         </ul>
       </div>
     </div>
     <div class="ft-bot">
-      <span>© 2026 Kora Hub Tecnologia Ltda. CNPJ 00.000.000/0001-00</span>
+      <span>© <span data-year></span> Kora Hub Tecnologia Ltda. CNPJ 00.000.000/0001-00</span>
       <span class="legal">
         <a href="#">Termos de uso</a>
         <a href="#">Privacidade</a>
