@@ -520,4 +520,60 @@
     });
   }
 
+  // ---- 14. Theme toggle ----
+  const themeToggleEl = document.getElementById('theme-toggle');
+  if (themeToggleEl) {
+    themeToggleEl.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('kh-theme', next);
+    });
+
+    // Also add toggle to mobile drawer when it's created
+    const drawerObserver = new MutationObserver((mutations) => {
+      mutations.forEach(m => {
+        m.addedNodes.forEach(node => {
+          if (node.classList && node.classList.contains('kora-mobile-drawer')) {
+            const mobileThemeBtn = document.createElement('button');
+            mobileThemeBtn.style.cssText = 'background:transparent;border:1px solid rgba(159,197,240,.15);border-radius:10px;color:#E8EDF7;cursor:pointer;padding:14px 0;font-size:15px;font-weight:500;font-family:inherit;display:flex;align-items:center;gap:10px;';
+            mobileThemeBtn.innerHTML = '🌙 Alternar tema claro/escuro';
+            mobileThemeBtn.addEventListener('click', () => {
+              const d = document.documentElement.getAttribute('data-theme') === 'dark';
+              document.documentElement.setAttribute('data-theme', d ? 'light' : 'dark');
+              localStorage.setItem('kh-theme', d ? 'light' : 'dark');
+            });
+            node.appendChild(mobileThemeBtn);
+            drawerObserver.disconnect();
+          }
+        });
+      });
+    });
+    drawerObserver.observe(document.body, { childList: true });
+  }
+
+  // ---- 15. Scroll progress bar ----
+  const progressBar = document.getElementById('scroll-progress');
+  if (progressBar) {
+    const updateProgress = () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = total > 0 ? `${(scrolled / total) * 100}%` : '0%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  // ---- 16. Back to top ----
+  const backToTopBtn = document.getElementById('back-to-top');
+  if (backToTopBtn) {
+    const updateBackToTop = () => {
+      const threshold = (document.documentElement.scrollHeight - window.innerHeight) * 0.35;
+      backToTopBtn.classList.toggle('visible', window.scrollY > threshold);
+    };
+    window.addEventListener('scroll', updateBackToTop, { passive: true });
+    backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    updateBackToTop();
+  }
+
 })();
