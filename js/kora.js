@@ -425,4 +425,99 @@
     });
   });
 
+  // ---- 10. Pricing toggle (monthly / annual) ----
+  const priceToggleBtn = document.getElementById('price-toggle');
+  if (priceToggleBtn) {
+    const annualNote = document.getElementById('price-annual-note');
+    const priceVals  = document.querySelectorAll('.price-val');
+
+    priceToggleBtn.addEventListener('click', () => {
+      const goAnnual = priceToggleBtn.getAttribute('aria-checked') !== 'true';
+      priceToggleBtn.setAttribute('aria-checked', String(goAnnual));
+      priceVals.forEach(el => {
+        el.textContent = goAnnual ? el.dataset.annual : el.dataset.monthly;
+      });
+      if (annualNote) {
+        annualNote.textContent = goAnnual
+          ? 'Cobrado anualmente · Economize 2 meses por ano'
+          : '';
+      }
+    });
+  }
+
+  // ---- 11. Comparison table toggle ----
+  const comparBtn  = document.getElementById('compare-toggle-btn');
+  const comparOuter = document.getElementById('compare-outer');
+  if (comparBtn && comparOuter) {
+    comparBtn.addEventListener('click', () => {
+      const open = comparOuter.classList.toggle('open');
+      comparBtn.innerHTML = open
+        ? 'Ocultar comparação <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 9L7 5L11 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        : 'Ver comparação completa de planos <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    });
+  }
+
+  // ---- 12. Sticky CTA ----
+  const stickyCTA = document.getElementById('sticky-cta');
+  if (stickyCTA) {
+    const heroEl  = document.querySelector('section.hero');
+    const ctaEl   = document.querySelector('section.cta');
+    const xBtn    = document.getElementById('sticky-cta-x');
+    let dismissed = false;
+
+    const updateCTA = () => {
+      if (dismissed) return;
+      const heroGone = heroEl ? heroEl.getBoundingClientRect().bottom < -80 : window.scrollY > 500;
+      const ctaNear  = ctaEl  ? ctaEl.getBoundingClientRect().top < window.innerHeight + 80 : false;
+      const show = heroGone && !ctaNear;
+      stickyCTA.classList.toggle('visible', show);
+      document.body.classList.toggle('sticky-on', show);
+    };
+
+    window.addEventListener('scroll', updateCTA, { passive: true });
+    if (xBtn) {
+      xBtn.addEventListener('click', () => {
+        dismissed = true;
+        stickyCTA.classList.remove('visible');
+        document.body.classList.remove('sticky-on');
+      });
+    }
+  }
+
+  // ---- 13. Cookie consent (LGPD) ----
+  const cookieBanner = document.getElementById('cookie-banner');
+  if (cookieBanner) {
+    const GA4_ID = 'G-XXXXXXXXXX'; // <- substitua pelo seu Measurement ID
+
+    const loadGA4 = () => {
+      if (window._ga4loaded) return;
+      window._ga4loaded = true;
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', GA4_ID);
+    };
+
+    const stored = localStorage.getItem('kh-cookie');
+    if (!stored) {
+      setTimeout(() => cookieBanner.classList.add('show'), 2200);
+    } else if (stored === 'ok') {
+      loadGA4();
+    }
+
+    document.getElementById('cookie-accept')?.addEventListener('click', () => {
+      localStorage.setItem('kh-cookie', 'ok');
+      cookieBanner.classList.remove('show');
+      loadGA4();
+    });
+    document.getElementById('cookie-reject')?.addEventListener('click', () => {
+      localStorage.setItem('kh-cookie', 'no');
+      cookieBanner.classList.remove('show');
+    });
+  }
+
 })();

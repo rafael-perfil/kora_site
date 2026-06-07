@@ -1,0 +1,17 @@
+{
+  "name": "Kora Hub",
+  "short_name": "Kora Hub",
+  "description": "IA que conecta seu ERP, marketplaces e WhatsApp",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#2E5A9B",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
